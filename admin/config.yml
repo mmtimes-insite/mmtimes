@@ -1,6 +1,8 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: mmtimes-insite/mmtimes   # replace with your GitHub username/repo
   branch: main
+  auth_endpoint: https://mmtimes.in/api/auth
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
