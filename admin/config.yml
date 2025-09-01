@@ -1,1 +1,20 @@
+backend:
+  name: github
+  repo: mmtimes-insite/mmtimes   # Replace with your GitHub repo (username/repo-name)
+  branch: main
+
+media_folder: "static/uploads"   # Where uploaded images will go inside your repo
+public_folder: "/uploads"        # Public URL path for images
+
+collections:
+  - name: "products"
+    label: "Products"
+    folder: "content/products"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Price", name: "price", widget: "number" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Image", name: "image", widget: "image" }
 
