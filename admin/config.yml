@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: mmtimes-insite/mmtimes   # replace if different
+  repo: mmtimes-insite/mmtimes   # Update if your repo path differs
   branch: main
 
 media_folder: "assets/uploads"
