@@ -1,20 +1,25 @@
+site_url: https://YOURDOMAIN.com   # example: https://mmtimes.in
+
 backend:
   name: github
-  repo: mmtimes-insite/mmtimes   # Replace with your GitHub repo (username/repo-name)
-  branch: main
+  repo: mmtimes-insite/mmtimes     # your repo name (user/repo format)
+  branch: main                     # or the branch you use
+  base_url: https://YOUR-OAUTH-URL # we’ll set this up in the login step
 
-media_folder: "static/uploads"   # Where uploaded images will go inside your repo
-public_folder: "/uploads"        # Public URL path for images
+media_folder: "assets/uploads"     # where images are stored in repo
+public_folder: "/assets/uploads"   # how site will use those images
 
 collections:
-  - name: "products"
-    label: "Products"
-    folder: "content/products"
+  - name: "listings"
+    label: "Listings"
+    folder: "listings"             # CMS will put new entries here
     create: true
     slug: "{{slug}}"
+    path: "{{slug}}/index"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Price", name: "price", widget: "number" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Image", name: "image", widget: "image" }
-
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Price", name: "price", widget: "string", required: false }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "Photos", name: "photos", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Description", name: "body", widget: "markdown" }
