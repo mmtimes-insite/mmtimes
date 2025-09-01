@@ -1,25 +1,25 @@
-site_url: https://YOURDOMAIN.com   # example: https://mmtimes.in
-
 backend:
   name: github
-  repo: mmtimes-insite/mmtimes     # your repo name (user/repo format)
-  branch: main                     # or the branch you use
-  base_url: https://YOUR-OAUTH-URL # we’ll set this up in the login step
+  repo: mmtimes-insite/mmtimes   # your repo name
+  branch: main                   # or 'master' if your repo uses that
+  base_url: https://mmtimes.in   # Cloudflare Pages domain
+  auth_endpoint: /api/auth       # Decap CMS auth route
 
-media_folder: "assets/uploads"     # where images are stored in repo
-public_folder: "/assets/uploads"   # how site will use those images
+site_url: https://mmtimes.in
+display_url: https://mmtimes.in
+logo_url: https://mmtimes.in/logo.png   # optional, replace if you have logo
+
+media_folder: "uploads"    # where uploaded images go in your repo
+public_folder: "/uploads"  # how they are served in the site
+
+publish_mode: simple
 
 collections:
-  - name: "listings"
-    label: "Listings"
-    folder: "listings"             # CMS will put new entries here
+  - name: "pages"
+    label: "Pages"
+    folder: "content/pages"
     create: true
     slug: "{{slug}}"
-    path: "{{slug}}/index"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Price", name: "price", widget: "string", required: false }
-      - { label: "Location", name: "location", widget: "string", required: false }
-      - { label: "Photos", name: "photos", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
-      - { label: "Description", name: "body", widget: "markdown" }
+      - { name: "title", label: "Title", widget: "string" }
+      - { name: "body", label: "Body", widget: "markdown" }
