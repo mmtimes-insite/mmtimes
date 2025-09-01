@@ -1,3 +1,4 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: mmtimes-insite/mmtimes   # your GitHub repo (owner/repo)
   branch: main
