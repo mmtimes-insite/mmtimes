@@ -1,6 +1,8 @@
 export async function onRequest(context) {
-  return new Response(
-    JSON.stringify({ github_token: context.env.GIT_TOKEN }),
-    { headers: { "Content-Type": "application/json" } }
-  );
+  if (context.env.GITHUB_TOKEN) {
+    return new Response(JSON.stringify({ token: context.env.GITHUB_TOKEN }), {
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+  return new Response("Unauthorized", { status: 401 });
 }
