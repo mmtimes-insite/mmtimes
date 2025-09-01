@@ -1,18 +1,20 @@
 backend:
   name: github
-  repo: mmtimes-insite/mmtimes   # Update if your repo path differs
+  repo: mmtimes-insite/mmtimes   # your GitHub repo (username/repo)
   branch: main
+  base_url: https://mmtimes.in   # your site URL
+  auth_endpoint: api/auth        # where OAuth is handled
 
-media_folder: "assets/uploads"
-public_folder: "/assets/uploads"
+media_folder: "public/uploads"
+public_folder: "/uploads"
 
 collections:
-  - name: "pages"
-    label: "Pages"
-    files:
-      - file: "index.html"
-        label: "Home Page"
-        name: "home"
-        fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Body", name: "body", widget: "markdown" }
+  - name: "posts"
+    label: "Blog Posts"
+    folder: "content/posts"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Body", name: "body", widget: "markdown" }
