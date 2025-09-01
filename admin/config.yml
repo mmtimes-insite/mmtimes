@@ -1,25 +1,17 @@
 backend:
-  name: github
-  repo: mmtimes-insite/mmtimes   # your repo name
-  branch: main                   # or 'master' if your repo uses that
-  base_url: https://mmtimes.in   # Cloudflare Pages domain
-  auth_endpoint: /api/auth       # Decap CMS auth route
+  name: git-gateway
+  branch: main
 
-site_url: https://mmtimes.in
-display_url: https://mmtimes.in
-logo_url: https://mmtimes.in/logo.png   # optional, replace if you have logo
-
-media_folder: "uploads"    # where uploaded images go in your repo
-public_folder: "/uploads"  # how they are served in the site
-
-publish_mode: simple
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
 
 collections:
   - name: "pages"
     label: "Pages"
-    folder: "content/pages"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { name: "title", label: "Title", widget: "string" }
-      - { name: "body", label: "Body", widget: "markdown" }
+    files:
+      - file: "index.html"
+        label: "Home Page"
+        name: "home"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Content", name: "body", widget: "markdown" }
