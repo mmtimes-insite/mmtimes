@@ -1,0 +1,431 @@
+/* ======================================== */
+/* 🌟 SMOOTH NEON TUBE TEXT FOR LOGO       */
+/* ======================================== */
+.logo span {
+  font-size: 2.5rem; /* adjust size */
+  font-weight: bold;
+  font-family: "Poppins", sans-serif; /* smooth rounded font */
+  color: #ffffff; /* solid inner blue */
+  -webkit-text-stroke: 0.01px #010000; /* thinner white tube outline */
+  /* slight blur for smooth edges */
+  text-shadow: 
+    0 0 0.2px #0c0000,
+    0 0 0.2px #00010a;
+}
+
+/* ======================================== */
+/* 🌐 GLOBAL RESET & BASE STYLES           */
+/* ======================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Segoe UI', sans-serif; color: #fff; overflow-x: hidden; }
+
+
+/* ======================================== */
+/* 🧭 GLOBAL LAYOUT OFFSET (after fixed navbar) */
+/* ======================================== */
+
+/* Define the combined height of header + navbar */
+body {
+  --header-nav-height: 120px; /* adjust if nav wraps into 2 lines */
+}
+
+/* Push all content below the fixed header+nav automatically */
+main, .page-content {
+  margin-top: var(--header-nav-height);
+  position: relative;
+  z-index: 1;
+}
+
+/* Optional: extra space for mobile screens */
+@media (max-width: 768px) {
+  body {
+    --header-nav-height: 30px;
+  }
+}
+
+
+
+
+/* ======================================== */
+/* 🎨 BACKGROUND IMAGE                     */
+/* ======================================== */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url("../images/bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  z-index: -2;
+}
+
+/* ======================================== */
+/* 🏠 HEADER + NAVIGATION WRAPPER           */
+/* ======================================== */
+.header-nav-wrapper {
+  position: fixed;  /* Ensure this is fixed */
+  top: 0; 
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+header {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  backdrop-filter: blur(100px);
+  border: 3.5px solid rgba(255, 255, 255, 0.962);
+  transition: transform 0.5s ease;
+}
+
+/* ======================================== */
+/* 💡 LOGO + BRAND                          */
+/* ======================================== */
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+/* Continuous Neon Glow for Logo Image */
+header .logo img {
+  height: 80px;
+  width: auto;
+  border-radius: 0.1px;
+  filter: drop-shadow(0 0 8px #00aaff) drop-shadow(0 0 12px #bde2f4);
+  animation: neonGlow 3s infinite ease-in-out;
+}
+
+@keyframes neonGlow {
+  0% {
+    filter: drop-shadow(0 0 5px #00aaff)
+            drop-shadow(0 0 10px #33ddff)
+            drop-shadow(0 0 15px #bde2f4);
+  }
+  50% {
+    filter: drop-shadow(0 0 10px #ffffff)
+            drop-shadow(0 0 20px #f0f0f0)
+            drop-shadow(0 0 30px #ffffff);
+  }
+  100% {
+    filter: drop-shadow(0 0 5px #00aaff)
+            drop-shadow(0 0 10px #33ddff)
+            drop-shadow(0 0 15px #bde2f4);
+  }
+}
+
+
+
+
+
+
+
+/* ======================================== */
+/* 🔝 TOP NAVIGATION (FULL-WIDTH + SLIMMER) */
+/* ======================================== */
+.top-nav {
+  width: 100%;
+  display: flex;
+  margin-top: 5px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3px; /* tighter gap between buttons */
+  padding: 5px 120px; /* smaller padding */
+  background: rgba(0, 0, 0, 0.25);
+  border: 2px solid rgba(255,255,255,0.8);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  top: 0;
+  z-index: 1001;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+  box-sizing: border-box;
+
+}
+
+
+/* ======================================== */
+/* 🌐 NAV LINKS (SMALLER 3D BUTTONS)        */
+/* ======================================== */
+.nav-link {
+  margin: 0 6px; /* reduce side spacing */
+  padding: 4px 16px; /* smaller button size */
+  border-radius: 5px;
+  border: 1.5px solid rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.7rem; /* reduced font size */
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  display: inline-block;
+  backdrop-filter: blur(2px);
+  box-shadow:
+    0 4px 0 rgba(0, 200, 255, 0.5),
+    0 6px 12px rgba(0, 200, 255, 0.2);
+  transition: all 0.25s ease;
+}
+
+/* Hover Effect */
+.nav-link:hover {
+  background: linear-gradient(145deg, rgba(0, 200, 255, 0.8), rgba(0, 255, 255, 0.6));
+  color: #111;
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 0 rgba(0, 150, 255, 0.7),
+    0 10px 20px rgba(0, 200, 255, 0.5);
+}
+
+/* Active Page Link */
+.nav-link.active {
+  background: linear-gradient(145deg, #00eaff, #0099cc);
+  color: #111;
+  box-shadow:
+    0 5px 0 #007b99,
+    0 8px 18px rgba(0, 200, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+/* Pressed Effect */
+.nav-link:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 2px 0 #007b99,
+    0 5px 10px rgba(0, 200, 255, 0.4);
+}
+
+/* Home button */
+.nav-link.home-btn {
+  cursor: default;
+}
+.nav-link.home-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  transform: none;
+  box-shadow: none;
+}
+
+
+
+/* ======================================== */
+/* ⬇ 3D DROPDOWN MENU (SOLID BACKGROUND BELOW BUTTON) */
+/* ======================================== */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* 🔹 Dropdown container */
+.dropdown-content {
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 115%; /* appears just below the button */
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background: linear-gradient(145deg, #e0f7ff, #b3ecff); /* solid smooth gradient */
+  border: 2px solid rgba(0, 200, 255, 0.9);
+  border-radius: 14px;
+  min-width: 240px;
+  box-shadow:
+    0 8px 25px rgba(0, 255, 255, 0.4),
+    inset 0 0 10px rgba(255, 255, 255, 0.2);
+  z-index: 2000;
+  transition: all 0.3s ease;
+  padding: 8px 0;
+  perspective: 800px; /* enables 3D depth */
+}
+
+/* ✨ Show dropdown with 3D pop effect */
+.dropdown:hover .dropdown-content,
+.dropdown-content:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0) rotateX(0deg);
+}
+
+/* 🔸 Dropdown link items */
+.dropdown-content a {
+  display: block;
+  padding: 10px 16px;
+  margin: 4px 10px;
+  font-size: 13px;
+  color: #000; /* darker text for solid background */
+  text-decoration: none;
+  background: linear-gradient(145deg, #ffffff, #dff8ff);
+  border: 1px solid rgba(0, 180, 255, 0.3);
+  border-radius: 10px;
+  box-shadow:
+    0 4px 0 rgba(0, 200, 255, 0.4),
+    0 6px 10px rgba(0, 200, 255, 0.3);
+  transition: all 0.25s ease;
+  transform: translateZ(0);
+}
+
+/* 🟢 Hover = Neon Lift */
+.dropdown-content a:hover {
+  background: linear-gradient(145deg, #00eaff, #00bfff);
+  color: #111;
+  transform: translateY(-2px) translateZ(5px);
+  box-shadow:
+    0 6px 0 rgba(0, 150, 255, 0.8),
+    0 12px 20px rgba(0, 200, 255, 0.5);
+}
+
+
+
+
+
+/* ======================================== */
+/* 🦶 FOOTER                                  */
+/* ======================================== */
+
+html, body { width: 100%; overflow-x: hidden; }
+
+
+
+footer {
+  width: calc(100% - 10px);
+  margin: 100px auto 5px auto;
+  padding: 30px 20px;
+  text-align: center;
+  background: rgba(0,0,0,0.3);
+  border-radius: 15.5px;
+  border-top: 1.5px solid rgba(255,255,255,0.962);
+  border-bottom: 1.5px solid rgba(255,255,255,0.962);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+
+/* Service Links in Footer */
+.service-link {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 18px;
+  border: 1.5px solid rgba(255,255,255,0.6);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.service-link:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* -------------------------- */
+/* Responsive Styles / Media Queries */
+/* -------------------------- */
+@media (max-width: 1024px) {
+  .welcome-section,
+  .achievements-section,
+  .future-projects {
+    margin-left: 0;
+    padding: 40px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-card {
+    padding: 30px 20px;
+    font-size: 0.95rem;
+  }
+
+  .card-grid, .footer-main {
+    grid-template-columns: 1fr; /* single column */
+    gap: 20px;
+  }
+
+  .sidebar-container {
+    display: none; /* hide sidebar on mobile */
+  }
+
+  .future-projects .fp-card {
+    padding: 25px 20px;
+  }
+
+  .welcome-section h1, .welcome-section h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-card {
+    padding: 20px 15px;
+  }
+
+  .welcome-section h1 {
+    font-size: 1.4rem;
+  }
+
+  .welcome-section h2 {
+    font-size: 1.2rem;
+  }
+
+  .sub-card h4 {
+    font-size: 1rem;
+  }
+}
+/* --- Neon Glow Hover for Footer Links --- */
+  footer a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+  footer a:hover {
+      color: #00ccff;
+      text-shadow: 0 0 6px #00ccff, 0 0 12px #00eaff;
+    }
+
+
+    
+.card-btn {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 14px 34px;
+  font-size: 1.05rem;
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid #00eaff;
+  border-radius: 40px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 15px rgba(0, 234, 255, 0.4), inset 0 0 10px rgba(0, 234, 255, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.card-btn:hover {
+  color: #000000;
+  background: #00eaff;
+  box-shadow: 0 0 25px rgba(0, 234, 255, 0.8), 0 0 50px rgba(0, 234, 255, 0.5);
+  transform: translateY(-4px) scale(1.05);
+}
+
+.card-btn:active {
+  transform: translateY(0px) scale(0.98);
+  box-shadow: 0 0 15px rgba(0, 234, 255, 0.5);
+}
+
+
+
