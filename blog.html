@@ -1,67 +1,153 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blogs - MM Times</title>
 
+  <title>Blogs - MM Times | Innovation, Engineering, Technology, Business, R&D & Manufacturing Insights</title>
+
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
- 
 
-  <!-- ✅ Performance Boost -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="canonical" href="https://www.mmtimes.in/index.html">
+  <!-- ============================= -->
+  <!-- 🔵 FAVICONS (PNG + PWA)       -->
+  <!-- ============================= -->
+  <link rel="icon" type="image/png" href="assets/images/favicon-16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="assets/images/favicon-32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="assets/images/favicon-64.png" sizes="64x64">
+  <link rel="apple-touch-icon" href="assets/images/favicon-180.png">
+  <link rel="manifest" href="assets/images/site.webmanifest">
+
+  <link rel="icon" sizes="192x192" href="assets/images/favicon-192.png">
+  <link rel="icon" sizes="512x512" href="assets/images/favicon-512.png">
+
+  <!-- Preload Logo -->
+  <link rel="preload" as="image" href="assets/images/logo-full.webp" type="image/webp">
+
+  <!-- ============================= -->
+  <!-- 🔵 CANONICAL URL             -->
+  <!-- ============================= -->
+  <link rel="canonical" href="https://www.mmtimes.in/blog.html">
   <meta name="robots" content="index, follow">
 
-<!-- Basic SEO -->
-<meta name="description" content="MM Times Blogs – Explore innovation, engineering insights, project ideas, and technology updates from our expert team. Stay inspired with real-world knowledge and creativity.">
-<meta name="keywords" content="MM Times Blogs, MM Times Articles, Innovation, Engineering, Projects, Technology, Research, Development, Ideas">
-<meta name="author" content="MEENAKSHI MUKUNDHA TIMES">
+  <!-- ============================= -->
+  <!-- 🔵 BASIC SEO                 -->
+  <!-- ============================= -->
+  <meta name="description" content="MM Times Blogs – Explore in-depth articles on innovation, engineering, manufacturing, R&D, business ideas, sourcing, technology, workshops, startups, and industry insights. Stay updated with expert knowledge from the MM Times team.">
 
-<!-- Open Graph -->
-<meta property="og:title" content="MM Times Blogs">
-<meta property="og:description" content="Discover insights, updates, and creative stories from MM Times — where innovation meets practical experience.">
-<meta property="og:image" content="https://www.mmtimes.in/assets/images/logo.png">
-<meta property="og:url" content="https://www.mmtimes.in/blogs.html">
-<meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="
+  MM Times Blogs,
+  MM Times Articles,
+  MM Times Insights,
+  MM Times Updates,
+  MM Times News,
+  MM Times Publications,
+  MM Times Innovation Blogs,
+  Engineering Blogs India,
+  Technology Blogs India,
+  R&D Blogs India,
+  Student Innovation Blogs,
+  Startup Blogs India,
+  Business Ideas Blogs India,
+  Manufacturing Blogs India,
+  IoT Blogs India,
+  Robotics Blogs India,
+  AI Blogs India,
+  Industrial Engineering Articles,
+  Material Procurement Blogs,
+  Product Development Articles,
+  Customized Manufacturing Insights,
+  Business Strategy Blogs,
+  Entrepreneurship Articles,
+  Research & Development Articles,
+  Renewable Energy Blogs,
+  Engineering Projects Articles,
+  Scientific Knowledge Blogs,
+  Web Development Blogs,
+  Branding & Design Blogs,
+  Import Export Procurement Blogs,
+  MSME Startup Blogs,
+  Innovation Center Updates,
+  Practical Workshops Articles,
+  Industry Case Studies India,
+  Engineering Education Blogs,
+  Prototype Development Articles,
+  Research Innovation Stories,
+  Electronic Projects Tutorials,
+  Career Articles Engineering,
+  Technology Trends 2025,
+  Automation & Testing Blogs,
+  India Industrial Growth Articles
+  ">
 
+  <meta name="subject" content="Technology, Innovation, Engineering, R&D, Projects, Business Insights">
+  <meta name="topic" content="Blogs, Educational Articles, Research, Practical Insights, Technology Trends">
+  <meta name="coverage" content="India">
+  <meta name="category" content="Blogs, Technology, Innovation, Engineering, Business, Manufacturing">
 
+  <!-- ============================= -->
+  <!-- 🔵 OPEN GRAPH (FACEBOOK)     -->
+  <!-- ============================= -->
+  <meta property="og:title" content="MM Times Blogs – Innovation, Technology & Engineering Insights">
+  <meta property="og:description" content="Deep-dive into innovation, engineering, sourcing, business, manufacturing, workshops, and real-world technical knowledge.">
+  <meta property="og:image" content="https://www.mmtimes.in/assets/images/logo-full.webp">
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="600">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:url" content="https://www.mmtimes.in/blog.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MM Times">
 
-<!-- Structured Data (JSON-LD Schema) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "MEENAKSHI MUKUNDHA TIMES",
-  "url": "https://www.mmtimes.in",
-  "logo": "https://www.mmtimes.in/assets/images/logo.png",
-  "sameAs": [
-    "https://www.linkedin.com/company/mmtimes",
-    "https://www.instagram.com/mmtimes_insta/",
-    "https://www.youtube.com/@mmtimes_meenakshimukundhatimes",
-    "https://www.facebook.com/profile.php?id=61581371498673",
-    "https://x.com/mmtimes_1"
-  ],
-  "contactPoint": [{
-    "@type": "ContactPoint",
-    "telephone": "+91-79892613425",
-    "contactType": "customer service",
-    "email": "info@mmtimes.in"
-  }],
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Chittavaram",
-    "addressLocality": "Chittavaram",
-    "addressRegion": "Andhra Pradesh",
-    "postalCode": "521182",
-    "addressCountry": "IN"
+  <!-- ============================= -->
+  <!-- 🔵 TWITTER CARD               -->
+  <!-- ============================= -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MM Times Blogs – Engineering, Innovation & Technology Stories">
+  <meta name="twitter:description" content="Articles on innovation, sourcing, technology, startup ideas, engineering, product design, and more.">
+  <meta name="twitter:image" content="https://www.mmtimes.in/assets/images/logo-full.webp">
+
+  <!-- ============================= -->
+  <!-- 🔵 JSON-LD STRUCTURED DATA    -->
+  <!-- ============================= -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "MM Times Blogs",
+    "url": "https://www.mmtimes.in/blog.html",
+    "description": "MM Times publishes blogs on engineering, innovation, manufacturing, sourcing, business development, projects, R&D and technology.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "MM Times - Meenakshi Mukundha Times",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.mmtimes.in/assets/images/logo-full.webp"
+      }
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/mmtimes",
+      "https://www.instagram.com/mmtimes_insta/",
+      "https://www.youtube.com/@mmtimes_meenakshimukundhatimes",
+      "https://www.facebook.com/profile.php?id=61581371498673",
+      "https://x.com/mmtimes_1"
+    ],
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "telephone": "+91-7989261342",
+      "contactType": "customer service",
+      "email": "info@mmtimes.in"
+    }],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Chittavaram",
+      "addressLocality": "Narsapur",
+      "addressRegion": "Andhra Pradesh",
+      "postalCode": "521182",
+      "addressCountry": "IN"
+    }
   }
-}
-</script>
+  </script>
 
 </head>
+
 
 <body>
 
@@ -915,4 +1001,5 @@ window.addEventListener('scroll', () => {
 
 
 </body>
+
 </html>
