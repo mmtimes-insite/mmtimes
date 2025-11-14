@@ -868,6 +868,10 @@
 
 
 </main>
+
+
+
+  
    <!-- Footer -->
 <footer>
     <div class="footer-main" style="
@@ -973,6 +977,7 @@
 </footer>
 
 
+
 <script src="assets/js/script.js"></script>
 
 
@@ -986,8 +991,8 @@ window.addEventListener('scroll', () => {
 
   if (currentScroll > lastScroll && currentScroll > 100) {
     // User is scrolling down
-    header.style.transform = 'translateY(-100%)';
-    nav.style.transform = 'translateY(-230%)';
+    header.style.transform = 'translateY(-350%)';
+    nav.style.transform = 'translateY(-350%)';
   } else {
     // User is scrolling up
     header.style.transform = 'translateY(0)';
@@ -1000,6 +1005,86 @@ window.addEventListener('scroll', () => {
 
 
 
-</body>
 
+<!-- 🌟 Floating Downloads Button -->
+<a href="downloads.html" class="floating-download-btn" title="Downloads">
+  <span class="btn-icon">⬇️</span>
+  <span class="btn-text">Downloads</span>
+</a>
+
+
+<style>
+/* ======================================== */
+/* 🌟 FLOATING DOWNLOADS BUTTON             */
+/* ======================================== */
+.floating-download-btn {
+  position: fixed;
+  right: 5px;
+  bottom: 20px;
+  background: rgba(0, 200, 255, 0.1);
+  color: #ffffff;
+  border: 2px solid #00eaff;
+  border-radius: 50px;
+  padding: 9px 14px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 0 15px rgba(0, 234, 255, 0.5),
+    inset 0 0 8px rgba(0, 234, 255, 0.2);
+  transition: all 0.3s ease;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.floating-download-btn:hover {
+  background: #00eaff;
+  color: #000;
+  transform: translateY(-5px) scale(1.05);
+  box-shadow:
+    0 0 30px rgba(0, 234, 255, 0.8),
+    0 0 60px rgba(0, 234, 255, 0.5);
+}
+
+/* Icon alignment fix */
+.btn-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+  display: inline-block;
+  transform: translateY(1px);
+}
+
+/* ======================================== */
+/* 📱 MOBILE VERSION - ICON ONLY            */
+/* ======================================== */
+@media (max-width: 768px) {
+  .floating-download-btn {
+    right: 5px;
+    bottom: 5px;
+    padding: 16px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .btn-text {
+    display: none;
+  }
+
+  .btn-icon {
+    transform: none;
+    font-size: 1.2rem;
+  }
+}
+
+
+</style>
+
+
+</body>
 </html>
