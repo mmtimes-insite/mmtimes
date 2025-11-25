@@ -301,6 +301,111 @@
 </style>  
 
 
+  
+<style>
+/* Ensures wrapper won't block clicks when hidden, but still uses your transform animation */
+.header-nav-wrapper.is-hidden,
+.header-nav-wrapper.is-visible {
+  /* keep transitions consistent with existing rules */
+  transition: transform 0.45s ease, opacity 0.35s ease;
+}
+
+/* Hidden state: visually moved (your script already sets transform on children),
+   but this ensures it's non-interactive and accessibility-friendly */
+.header-nav-wrapper.is-hidden {
+  pointer-events: none;    /* don't block underlying elements */
+  opacity: 0;              /* optional fade */
+  /* keep it in the layout visually by transform on children; if you want the wrapper to also move:
+     transform: translateY(-120%); */
+}
+
+/* Visible state: interactive */
+.header-nav-wrapper.is-visible {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+/* Fallback: if no header-nav-wrapper exists and JS applied class to header itself */
+header.is-hidden {
+  pointer-events: none;
+  opacity: 0;
+}
+header.is-visible {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+</style>  
+
+
+<script>
+(() => {
+  let lastScroll = 0;
+  const header = document.querySelector('header');
+  const nav = document.querySelector('.top-nav');
+  const wrapper = document.querySelector('.header-nav-wrapper') || header.parentElement;
+
+  // Safety: ensure wrapper exists
+  if (!wrapper) {
+    console.warn('header-nav-wrapper not found; pointer-event toggles will be applied to header element.');
+  }
+
+  // Utility to check if an element contains the active focused element
+  function isFocusInside(el) {
+    return document.activeElement && el && el.contains(document.activeElement);
+  }
+
+  // Hide: preserve your transform but also set pointer-events none & aria-hidden
+  function hideHeader() {
+    // keep your current transforms (makes the same visual hide)
+    if (header) header.style.transform = 'translateY(-350%)';
+    if (nav) nav.style.transform = 'translateY(-350%)';
+
+    // mark wrapper as hidden so pointer-events are disabled
+    const target = wrapper || header;
+    if (target) {
+      target.classList.add('is-hidden');
+      target.classList.remove('is-visible');
+      target.setAttribute('aria-hidden', 'true');
+      // if a control inside header is focused, blur it to avoid keyboard traps
+      if (isFocusInside(target)) document.activeElement.blur();
+    }
+  }
+
+  // Show: restore transform and pointer-events
+  function showHeader() {
+    if (header) header.style.transform = 'translateY(0)';
+    if (nav) nav.style.transform = 'translateY(0)';
+
+    const target = wrapper || header;
+    if (target) {
+      target.classList.remove('is-hidden');
+      target.classList.add('is-visible');
+      target.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScroll > lastScroll && currentScroll > 100) {
+      // scrolling down -> hide
+      hideHeader();
+    } else {
+      // scrolling up -> show
+      showHeader();
+    }
+
+    lastScroll = currentScroll <= 0 ? 0 : currentScroll; // avoid negative values
+  }, { passive: true });
+
+  // Also expose for programmatic control (optional)
+  window.__headerNav = { hide: hideHeader, show: showHeader };
+})();
+</script>
+
+
+  
 <script>
   const hamburger = document.getElementById('hamburgerToggle');
   const mobileMenu = document.getElementById('mobileMenu');
@@ -2031,4 +2136,5 @@ window.addEventListener('scroll', () => {
 
 </body>
 </html>
+
 
