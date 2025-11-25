@@ -654,16 +654,13 @@ header.is-visible {
       <label>Organization / College <span>*</span></label>
       <input type="text" name="organization" placeholder="Your college / organization" required>
 
-      <label>Interested Workshop <span>*</span></label>
-      <select name="workshop" required>
-        <option value="">-- Select Workshop --</option>
-        <option>Robotics</option>
-        <option>IoT & Embedded Systems</option>
-        <option>Renewable Energy</option>
-        <option>Cooling Systems</option>
-        <option>FPV Drone & Kits</option>
-        <option>Other</option>
-      </select>
+      <label for="workshopInput">Interested Workshop <span>*</span></label>
+      <input id="workshopInput"
+       name="workshop"
+       type="text"
+       placeholder="Enter workshop name (e.g. Drone Building & Programming Workshop)"
+       required>
+
 
       <label>Message <span>*</span></label>
       <textarea name="message" rows="4" placeholder="Describe your expectations..." required></textarea>
@@ -788,6 +785,35 @@ header.is-visible {
   transform: scale(1.03);
 }
 
+
+
+/* style for the new workshop input - matches other form inputs */
+#workshopInput {
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid #00cfff;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  box-shadow:
+    inset 0 0 10px rgba(0, 234, 255, 0.4),
+    0 0 10px rgba(0, 234, 255, 0.15);
+  transition: 0.3s;
+}
+
+#workshopInput:focus {
+  border-color: #00eaff;
+  box-shadow:
+    inset 0 0 15px rgba(0, 234, 255, 0.7),
+    0 0 20px rgba(0, 234, 255, 0.35);
+  transform: scale(1.01);
+}
+
+
+    
 /* ========================= */
 /* 3D NEON SUBMIT BUTTON */
 /* ========================= */
@@ -864,6 +890,37 @@ header.is-visible {
 
 </style>
 
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Prefill workshop input when any .register-btn is clicked
+  document.querySelectorAll('.register-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const ws = btn.getAttribute('data-workshop') || btn.dataset.workshop || '';
+      const input = document.getElementById('workshopInput');
+      if (input && ws) {
+        input.value = ws;
+      }
+      // If your existing code opens the popup on click of this button, it will still run.
+      // If not, and you want this button to also open the popup, uncomment the lines below:
+      //
+      // const popup = document.getElementById('workshopFormPopup');
+      // if (popup) popup.style.display = 'flex';
+    });
+  });
+
+  // Optional: if the popup is opened programmatically elsewhere, keep the same prefill behavior
+  // by exposing a helper:
+  window.prefillWorkshopName = function(name) {
+    const input = document.getElementById('workshopInput');
+    if (input) input.value = name || '';
+  };
+});
+</script>
+
+
+    
 
 <script>
 document.getElementById("openWorkshopFormBtn").onclick = function() {
@@ -2012,6 +2069,7 @@ window.addEventListener('scroll', () => {
 
 </body>
 </html>
+
 
 
 
