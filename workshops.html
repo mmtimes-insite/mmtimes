@@ -1771,18 +1771,40 @@ function submitForm(e) {
 
 </main>
 
-<!-- ✅ Floating WhatsApp, Call, and Mail Buttons -->
+<!-- ✅ Floating WhatsApp, Call, Mail & Share Buttons -->
 <div class="floating-buttons">
+
+  <!-- ⭐ New Share Button Added -->
+<button class="float-btn share" title="Share this page" onclick="sharePage()">
+  <img src="assets/icons/share-icon.ico" alt="Share" class="share-icon">
+</button>
+
   <a href="https://wa.me/919494119703" class="float-btn whatsapp" title="Chat on WhatsApp">💬</a>
   <a href="tel:+919494119703" class="float-btn call" title="Call Us">📞</a>
-  <a href="mailto:info@mmtimes.in" class="float-btn mail" title="Email Us">📧</a>
+  <a href="mailto:info@mmtimes.com" class="float-btn mail" title="Email Us">📧</a>
 </div>
+
+<script>
+  // ⭐ Native Share Feature
+  function sharePage() {
+    if (navigator.share) {
+      navigator.share({
+        title: document.title,
+        text: "Check out this page from MM Times!",
+        url: window.location.href
+      })
+      .catch((error) => console.log('Share failed:', error));
+    } else {
+      alert("Sharing is not supported on your device.");
+    }
+  }
+</script>
 
 <style>
   /* ✅ Floating Buttons Container */
   .floating-buttons {
     position: fixed;
-    right: 20px;
+    right: 10px;
     bottom: 80px;
     display: flex;
     flex-direction: column;
@@ -1790,7 +1812,7 @@ function submitForm(e) {
     z-index: 9999;
   }
 
-  /* ✅ Individual Button Style */
+  /* ✅ Base Floating Button Style */
   .float-btn {
     width: 50px;
     height: 50px;
@@ -1801,6 +1823,8 @@ function submitForm(e) {
     color: #fff;
     font-size: 26px;
     text-decoration: none;
+    border: none;
+    cursor: pointer;
     box-shadow: 0 0 6px rgba(255,255,255,0.2);
     animation: softglow 2s infinite alternate ease-in-out;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
@@ -1811,22 +1835,31 @@ function submitForm(e) {
     box-shadow: 0 0 20px rgba(255,255,255,0.6);
   }
 
-  /* ✅ Button Colors */
+  /* 🎨 Colors */
+  .float-btn.share { background-color: #6A5ACD; }   /* Purple / Share */
   .float-btn.whatsapp { background-color: #25D366; }
   .float-btn.call { background-color: #007AFF; }
   .float-btn.mail { background-color: #D44638; }
 
-  /* ✅ Soft Glow Animation */
+  /* ✨ Soft Glow Animation */
   @keyframes softglow {
     from { box-shadow: 0 0 6px rgba(255,255,255,0.3); }
     to { box-shadow: 0 0 14px rgba(255,255,255,0.6); }
   }
 
-  /* ✅ Tablet */
+  .share-icon {
+  width: 55%;
+  height: 55%;
+  object-fit: contain;
+  pointer-events: none; /* ensures clicking works properly */
+}
+
+
+  /* 📱 Tablet */
   @media (max-width: 768px) {
     .floating-buttons {
       right: 12px;
-      bottom: 70px; /* ⬆️ increased from 20px → 70px for more space */
+      bottom: 70px;
       gap: 14px;
     }
 
@@ -1837,11 +1870,11 @@ function submitForm(e) {
     }
   }
 
-  /* ✅ Small Mobile */
+  /* 📱 Small Mobile */
   @media (max-width: 480px) {
     .floating-buttons {
       right: 5px;
-      bottom: 90px; /* ⬆️ more gap for phones with navigation bars */
+      bottom: 90px;
       gap: 12px;
     }
 
@@ -1853,136 +1886,6 @@ function submitForm(e) {
   }
 </style>
 
-  <!-- Footer -->
-<footer>
-    <div class="footer-main" style="
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 40px;
-      text-align: left;
-      justify-content: center;
-      background: rgba(255,255,255,0.05);
-      border-radius: 16px;
-      padding: 50px 30px;
-      backdrop-filter: blur(14px);
-      border: 1.5px solid rgba(255,255,255,0.5);
-    ">
-      <div class="footer-col">
-        <h3 style="font-size: 1.3rem; margin-bottom: 10px;">MM Times</h3>
-        <p style="font-size: 0.85rem; line-height: 1.6;">
-          Research | Design | Innovation  
-          Creating intelligent solutions across energy, technology, and manufacturing.
-        </p>
-        <p style="font-size: 0.85rem; line-height: 1.6;">
-          Head Office: Bhimavaram - Andhra Pradesh, India.
-        </p>
-        <p style="font-size: 0.85rem; line-height: 1.6;">
-          Serving across all over Andhra Pradesh and Telangana with Multi Zone Points.
-        </p>
-        <p style="font-size: 0.85rem; line-height: 1.6;">
-          Hyderabad, Tirupati, Nellore, Sullutpeta, Guntur, Vijayawada, Rajahmundry, Visakapatnam.
-        </p>
-      </div>
-
-      <div class="footer-col">
-        <h3 style="font-size: 1.3rem; margin-bottom: 10px;">Explore</h3>
-        <ul style="list-style: none; padding: 0;">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="workshops.html">Workshops</a></li>
-          <li><a href="projects.html">Projects</a></li>
-          <li><a href="careers.html">Careers</a></li>
-          <li><a href="be-an-entrepreneur.html">Be an Entrepreneur</a></li>
-          <li><a href="be-a-manufacturer.html">Be a Manufacturer</a></li>
-          <li><a href="book-of-business-ideas.html">Book of Business Ideas</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h3 style="font-size: 1.2rem; margin-bottom: 10px;">Services</h3>
-        <ul style="list-style: none; padding: 0;">
-          <li><a href="logo-web-solutions.html">Logo & Web Solutions</a></li>
-          <li><a href="company-registration.html">Company Registration</a></li>
-          <li><a href="material-procurement.html">Procurement</a></li>
-          <li><a href="customized-sourcing.html">Sourcing & Inspection</a></li>
-          <li><a href="business-setup.html">Business Setup</a></li>
-          <li><a href="student-startup-packages.html">Startup Packages</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h3 style="font-size: 1.2rem; margin-bottom: 10px;">Trust & Policy</h3>
-        <ul style="list-style: none; padding: 0;">
-          <li><a href="buying-terms.html">Buying Terms & Conditions</a></li>
-          <li><a href="exchange-policy.html">Exchange Policy</a></li>
-          <li><a href="quality-assurance.html">Quality of Service</a></li>
-          <li><a href="return-refund.html">Return & Refund Policy</a></li>
-          <li><a href="privacy-policy.html">Privacy & Data Protection</a></li>
-          <li><a href="customer-rights.html">Customer Rights & Support</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h3 style="font-size: 1.2rem; margin-bottom: 10px;">Connect</h3>
-        <p style="margin-bottom: 8px;">📧 <a href="mailto:info@mmtimes.in">info@mmtimes.in</a></p>
-        <p style="margin-bottom: 8px;">📞 <a href="tel:+79892613425">+91 79892 61342</a></p>
-        <p style="margin-bottom: 8px;">📞 <a href="tel:+79892613425">+91 94941 19703</a></p> 
-
-        <div style="margin-top: 12px;">
-          <a href="https://www.linkedin.com/company/mmtimes" target="_blank" style="margin-right:12px;">LinkedIn</a>
-          <a href="https://www.instagram.com/mmtimes_insta/" target="_blank" style="margin-right:12px;">Instagram</a>
-          <a href="https://www.youtube.com/@mmtimes_meenakshimukundhatimes" target="_blank" style="margin-right:12px;">YouTube</a>
-          <a href="https://www.facebook.com/profile.php?id=61581371498673" target="_blank" style="margin-right:12px;">Facebook</a>
-          <a href="https://x.com/mmtimes_1" target="_blank" style="margin-right:12px;">Twitter / X</a>
-          <a href="https://wa.me/7989261342" target="_blank">WhatsApp</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-bottom" style="
-      margin-top: 40px;
-      border-top: 1px solid rgba(255,255,255,0.4);
-      padding-top: 20px;
-      font-size: 0.85rem;
-      letter-spacing: 0.5px;
-      text-align: center;
-    ">
-      <p>© 2025 Meenakshi Mukundha Times — All Rights Reserved</p>
-      <p>
-        <a href="privacy-policy.html">Privacy Policy</a> |
-        <a href="terms.html">Terms</a> |
-        <a href="refunds.html">Refunds</a> |
-        <a href="contact.html">Support</a>
-      </p>
-    </div>
-</footer>
-
-
-
-<script src="assets/js/script.js"></script>
-
-
-<script>
-let lastScroll = 0;
-const header = document.querySelector('header');
-const nav = document.querySelector('.top-nav');
-
-window.addEventListener('scroll', () => {
-  const currentScroll = window.pageYOffset;
-
-  if (currentScroll > lastScroll && currentScroll > 100) {
-    // User is scrolling down
-    header.style.transform = 'translateY(-350%)';
-    nav.style.transform = 'translateY(-350%)';
-  } else {
-    // User is scrolling up
-    header.style.transform = 'translateY(0)';
-    nav.style.transform = 'translateY(0)';
-  }
-
-  lastScroll = currentScroll;
-});
-</script>
 
 
 
@@ -2051,6 +1954,10 @@ window.addEventListener('scroll', () => {
     height: 30px;
     justify-content: center;
     font-size: 1.2rem;
+
+    /* ⭐ NEW: Solid filled color on mobile */
+    background: #fcfdfa !important; 
+    border: none; /* optional: remove border if you want a clean filled circle */
   }
 
   .btn-text {
@@ -2060,22 +1967,123 @@ window.addEventListener('scroll', () => {
   .btn-icon {
     transform: none;
     font-size: 1.2rem;
+    color: #000; /* optional: better visibility on cyan background */
   }
 }
-
 
 </style>
 
 
+
+  <!-- Footer -->
+<footer>
+    <div class="footer-main" style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 40px;
+      text-align: left;
+      justify-content: center;
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 50px 30px;
+      backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(255,255,255,0.5);
+    ">
+      <div class="footer-col">
+        <h3 style="font-size: 1.3rem; margin-bottom: 10px;">MM Times</h3>
+        <p style="font-size: 0.85rem; line-height: 1.6;">
+          Research | Design | Innovation  
+          Creating intelligent solutions across energy, technology, and manufacturing.
+        </p>
+        <p style="font-size: 0.85rem; line-height: 1.6;">
+          Head Office: Bhimavaram - Andhra Pradesh, India.
+        </p>
+        <p style="font-size: 0.85rem; line-height: 1.6;">
+          Serving across all over Andhra Pradesh and Telangana with Multi Zone Points.
+        </p>
+        <p style="font-size: 0.85rem; line-height: 1.6;">
+          Hyderabad, Tirupati, Nellore, Sullutpeta, Guntur, Vijayawada, Rajahmundry, Visakapatnam.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h3 style="font-size: 1.3rem; margin-bottom: 10px;">Explore</h3>
+        <ul style="list-style: none; padding: 0;">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="workshops.html">Workshops</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="be-an-entrepreneur.html">Be an Entrepreneur</a></li>
+          <li><a href="be-a-manufacturer.html">Be a Manufacturer</a></li>
+          <li><a href="book-of-business-ideas.html">Book of Business Ideas</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 style="font-size: 1.2rem; margin-bottom: 10px;">Services</h3>
+        <ul style="list-style: none; padding: 0;">
+          <li><a href="logo-web-solutions.html">Logo & Web Solutions</a></li>
+          <li><a href="company-registration.html">Company Registration</a></li>
+          <li><a href="material-procurement.html">Procurement</a></li>
+          <li><a href="customized-sourcing.html">Sourcing & Inspection</a></li>
+          <li><a href="business-setup.html">Business Setup</a></li>
+          <li><a href="student-startup-packages.html">Startup Packages</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 style="font-size: 1.2rem; margin-bottom: 10px;">Trust & Policy</h3>
+        <ul style="list-style: none; padding: 0;">
+          <li><a href="buying-terms.html">Buying Terms & Conditions</a></li>
+          <li><a href="exchange-policy.html">Exchange Policy</a></li>
+          <li><a href="quality-assurance.html">Quality of Service</a></li>
+          <li><a href="return-refund.html">Return & Refund Policy</a></li>
+          <li><a href="privacy-policy.html">Privacy & Data Protection</a></li>
+          <li><a href="customer-rights.html">Customer Rights & Support</a></li>94941 19703
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 style="font-size: 1.2rem; margin-bottom: 10px;">Connect</h3>
+        <p style="margin-bottom: 8px;">📧 <a href="mailto:info@mmtimes.in">info@mmtimes.in</a></p>
+        <p style="margin-bottom: 8px;">📞 <a href="tel:+79892613425">+91 79892 61342</a></p>
+        <p style="margin-bottom: 8px;">📞 <a href="tel:+79892613425">+91 94941 19703</a></p> 
+
+        <div style="margin-top: 12px;">
+          <a href="https://www.linkedin.com/company/mmtimes" target="_blank" style="margin-right:12px;">LinkedIn</a>
+          <a href="https://www.instagram.com/mmtimes_insta/" target="_blank" style="margin-right:12px;">Instagram</a>
+          <a href="https://www.youtube.com/@mmtimes_meenakshimukundhatimes" target="_blank" style="margin-right:12px;">YouTube</a>
+          <a href="https://www.facebook.com/profile.php?id=61581371498673" target="_blank" style="margin-right:12px;">Facebook</a>
+          <a href="https://x.com/mmtimes_1" target="_blank" style="margin-right:12px;">Twitter / X</a>
+          <a href="https://wa.me/7989261342" target="_blank">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom" style="
+      margin-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.4);
+      padding-top: 20px;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      text-align: center;
+    ">
+      <p>© 2025 Meenakshi Mukundha Times — All Rights Reserved</p>
+      <p>
+        <a href="privacy-policy.html">Privacy Policy</a> |
+        <a href="terms.html">Terms</a> |
+        <a href="refunds.html">Refunds</a> |
+        <a href="contact.html">Support</a>
+      </p>
+    </div>
+</footer>
+
+
+
+<script src="assets/js/script.js"></script>
+
+
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
