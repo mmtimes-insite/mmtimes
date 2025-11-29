@@ -1710,6 +1710,8 @@ header.is-visible {
 
 
 
+  
+
 <!-- ====== JavaScript: open/close/prefill/focus-trap/submit + address helper ====== -->
 <script>
 (function(){
@@ -1723,6 +1725,10 @@ header.is-visible {
   const useLocBtn = document.getElementById('useLocationBtn');
   const focusableSelector = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
   let lastFocused = null;
+
+  // NEW: success popup references (these exist in the HTML you pasted)
+  const successPopup = document.getElementById('successPopup');
+  const successOkBtn = document.getElementById('successOkBtn');
 
   function openPopup(prefillWorkshop) {
     lastFocused = document.activeElement;
@@ -1821,7 +1827,12 @@ header.is-visible {
     }, { timeout: 10000 });
   });
 
-  // form submit handling (client-side only)
+  /* ------------------------------------------------------------------
+     REPLACED: form.submit handler (keeps original behavior + shows success popup)
+     I kept everything else intact — this block now POSTs JSON to Apps Script
+     and displays the new success modal on success.
+     ------------------------------------------------------------------ */
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
 
@@ -1839,23 +1850,140 @@ header.is-visible {
       return;
     }
 
-    // Show success (simulate server submit)
-    successBox.style.display = 'block';
+    // Collect form data to send
+    const payload = {
+      workshop: workshopHidden.value || '',
+      name: document.getElementById('name').value || '',
+      email: document.getElementById('email').value || '',
+      phone: document.getElementById('phone').value || '',
+      organization: document.getElementById('organization').value || '',
+      address: document.getElementById('address').value || '',
+      message: document.getElementById('message').value || ''
+    };
 
-    // collect data if you want to send it to your server later
-    // const data = new FormData(form);
-    // fetch('/api/register', { method:'POST', body: data })...
+    // Keep the inline success box hidden until server confirms
+    successBox.style.display = 'none';
 
-    setTimeout(() => {
-      closePopup();
-    }, 2200);
+    // ---- SEND TO GOOGLE APPS SCRIPT ----
+    // Replace the URL below with your deployed Apps Script Web App URL if needed
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbymxCgcUXbpmfgjTQrfF1FfMMep0pG-YWZxSH3FvPlZ_q7yz2j8PoRxbL50mtMC2mtA/exec";
+
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      // no-cache mode is fine; CORS is controlled by Apps Script "Who has access" setting
+      cache: 'no-store'
+    })
+    .then(response => {
+      // Apps Script returns JSON; try parse safely
+      return response.json().catch(() => ({ status: 'unknown' }));
+    })
+    .then(data => {
+      // Expecting { status: "success" } from the Apps Script
+      if (data && data.status === 'success') {
+        // Close the form popup (original behavior) AND show the new success modal
+        closePopup();                  // existing function — unchanged
+        if (successPopup) {
+          successPopup.style.display = 'flex';
+          successPopup.setAttribute('aria-hidden', 'false');
+          // move focus to OK button for accessibility
+          try { successOkBtn.focus(); } catch (err) { /* ignore */ }
+        } else {
+          // fallback: show inline success if popup missing
+          successBox.style.display = 'block';
+          setTimeout(() => closePopup(), 1800);
+        }
+      } else {
+        // server responded but indicated an error
+        console.error('Apps Script response:', data);
+        alert('Submission failed on server. Please try again or contact admin.');
+      }
+    })
+    .catch(err => {
+      console.error('Network or CORS error:', err);
+      alert('Network error while submitting the form. Please check your connection.');
+    });
   });
+
+  // success popup OK button handler — simply hides the success modal and returns focus
+  if (successOkBtn && successPopup) {
+    successOkBtn.addEventListener('click', () => {
+      successPopup.style.display = 'none';
+      successPopup.setAttribute('aria-hidden', 'true');
+      // return focus to last focused element (if any) — or to body
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      } else {
+        document.body.focus();
+      }
+    });
+  }
 
   // expose function to open popup programmatically if needed
   window.openWorkshopPopup = openPopup;
 
 })();
 </script>
+
+
+
+<!-- SUCCESS POPUP -->
+<div id="successPopup" class="success-modal" aria-hidden="true" role="dialog" aria-labelledby="successTitle">
+  <div class="success-content" role="document">
+    <h2 id="successTitle">🎉 Registration Successful!</h2>
+    <p id="successText">Thanks! Your registration request has been received. We'll contact you soon.</p>
+    <div style="margin-top:16px; display:flex; gap:10px; justify-content:center;">
+      <button id="successOkBtn" class="success-ok-btn" aria-label="Close success dialog">OK</button>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Success popup styles (neon / glass to match your theme) */
+.success-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 10, 20, 0.78);
+  backdrop-filter: blur(10px);
+  z-index: 200000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.success-content {
+  width: 460px;
+  max-width: 96%;
+  padding: 26px 28px;
+  border-radius: 14px;
+  background: rgba(0, 20, 40, 0.7);
+  border: 2px solid rgba(0,255,255,0.7);
+  color: #eafcff;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0,200,255,0.12), inset 0 0 12px rgba(0,255,255,0.06);
+  animation: successPop .22s ease;
+}
+@keyframes successPop { from { opacity:0; transform: translateY(6px) scale(.98);} to {opacity:1; transform:none;} }
+.success-content h2 { margin: 6px 0 8px; font-size: 1.35rem; color:#e6faff; text-shadow:0 0 8px rgba(0,234,255,0.28); }
+.success-content p { color:#dff8ff; margin:0; line-height:1.4; }
+.success-ok-btn {
+  padding: 10px 24px;
+  border-radius: 30px;
+  background: linear-gradient(90deg,#00d2ff,#0099ff);
+  border: none;
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #004d80, 0 0 20px rgba(0,234,255,0.5);
+}
+.success-ok-btn:hover { transform: translateY(-3px); }
+@media (max-width: 480px) {
+  .success-content { padding: 18px; }
+  .success-content h2 { font-size: 1.05rem; }
+  .success-ok-btn { padding: 8px 18px; }
+}
+</style>
 
 
 
@@ -2249,3 +2377,4 @@ header.is-visible {
 
 </body>
 </html>
+
