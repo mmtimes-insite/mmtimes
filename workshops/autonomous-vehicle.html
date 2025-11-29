@@ -1713,6 +1713,8 @@ header.is-visible {
   
 
 <!-- ====== JavaScript: open/close/prefill/focus-trap/submit + address helper ====== -->
+
+<!-- ====== JavaScript: open/close/prefill/focus-trap/submit + address helper ====== -->
 <script>
 (function(){
   const openButtons = document.querySelectorAll('.register-btn, .cta-btn[href="#workshopFormPopup"]');
@@ -1726,13 +1728,12 @@ header.is-visible {
   const focusableSelector = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
   let lastFocused = null;
 
-  // NEW: success popup references (these exist in the HTML you pasted)
+  // success popup references
   const successPopup = document.getElementById('successPopup');
   const successOkBtn = document.getElementById('successOkBtn');
 
   function openPopup(prefillWorkshop) {
     lastFocused = document.activeElement;
-    // set workshop fields
     const ws = prefillWorkshop || 'Workshop Registration';
     workshopHidden.value = ws;
     workshopDisplay.value = ws;
@@ -1740,11 +1741,9 @@ header.is-visible {
     popup.style.display = 'flex';
     popup.setAttribute('aria-hidden', 'false');
 
-    // focus first editable field
     const firstInput = popup.querySelector('input:not([readonly]), textarea, select');
     if (firstInput) firstInput.focus();
 
-    // add listeners
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('focus', maintainFocus, true);
   }
@@ -1754,7 +1753,6 @@ header.is-visible {
     popup.setAttribute('aria-hidden', 'true');
     successBox.style.display = 'none';
 
-    // optional reset (keeps workshop value)
     form.reset();
     workshopDisplay.value = workshopHidden.value || '';
 
@@ -1777,7 +1775,6 @@ header.is-visible {
   closeBtn.addEventListener('click', (e) => { e.preventDefault(); closePopup(); });
   popup.addEventListener('click', (e) => { if (e.target === popup) closePopup(); });
 
-  // ESC and tab trap
   function handleKeyDown(e) {
     if (e.key === 'Escape' || e.key === 'Esc') { closePopup(); }
     if (e.key === 'Tab') { trapTabKey(e); }
@@ -1804,7 +1801,7 @@ header.is-visible {
     }
   }
 
-  // "Use my location" helper: attempts to fill address with lat,long (no external API)
+  // Use my location
   useLocBtn && useLocBtn.addEventListener('click', (e) => {
     e.preventDefault();
     if (!navigator.geolocation) {
@@ -1827,22 +1824,15 @@ header.is-visible {
     }, { timeout: 10000 });
   });
 
-  /* ------------------------------------------------------------------
-     REPLACED: form.submit handler (keeps original behavior + shows success popup)
-     I kept everything else intact — this block now POSTs JSON to Apps Script
-     and displays the new success modal on success.
-     ------------------------------------------------------------------ */
-
+  /* ---------- FORM SUBMIT HANDLER (FormData approach to avoid preflight) ---------- */
   form.addEventListener('submit', function(e){
     e.preventDefault();
 
-    // HTML5 constraint validation
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
 
-    // small phone normalization check (optional)
     const phone = document.getElementById('phone').value.trim();
     if (phone.length < 7) {
       alert('Please enter a valid phone number.');
@@ -1850,73 +1840,66 @@ header.is-visible {
       return;
     }
 
-    // Collect form data to send
-    const payload = {
-      workshop: workshopHidden.value || '',
-      name: document.getElementById('name').value || '',
-      email: document.getElementById('email').value || '',
-      phone: document.getElementById('phone').value || '',
-      organization: document.getElementById('organization').value || '',
-      address: document.getElementById('address').value || '',
-      message: document.getElementById('message').value || ''
-    };
+    // Build FormData (browser sets appropriate headers; avoids preflight)
+    const fd = new FormData();
+    fd.append('workshop', workshopHidden.value || '');
+    fd.append('name', document.getElementById('name').value || '');
+    fd.append('email', document.getElementById('email').value || '');
+    fd.append('phone', document.getElementById('phone').value || '');
+    fd.append('organization', document.getElementById('organization').value || '');
+    fd.append('address', document.getElementById('address').value || '');
+    fd.append('message', document.getElementById('message').value || '');
 
-    // Keep the inline success box hidden until server confirms
     successBox.style.display = 'none';
 
-    // ---- SEND TO GOOGLE APPS SCRIPT ----
-    // Replace the URL below with your deployed Apps Script Web App URL if needed
+    // ←←← SET THIS TO YOUR APPS SCRIPT /exec URL (must be exact) →→→
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzL9nugVZFAwnS6ZBmIYcBKbvO4nCND2XctdtrEIMJsIPUfn7B8wWQ_wkeOJs_bb67E/exec";
 
+    // Send and debug
     fetch(APPS_SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      // no-cache mode is fine; CORS is controlled by Apps Script "Who has access" setting
+      body: fd,
       cache: 'no-store'
     })
-    .then(response => {
-      // Apps Script returns JSON; try parse safely
-      return response.json().catch(() => ({ status: 'unknown' }));
+    .then(async response => {
+      console.log('HTTP', response.status, response.statusText);
+      const raw = await response.text();
+      console.log('Server raw response:', raw);
+      try {
+        return JSON.parse(raw);
+      } catch (parseErr) {
+        throw new Error('Server returned non-JSON response. Check Apps Script deployment and URL.');
+      }
     })
     .then(data => {
-      // Expecting { status: "success" } from the Apps Script
       if (data && data.status === 'success') {
-        // Close the form popup (original behavior) AND show the new success modal
-        closePopup();                  // existing function — unchanged
+        closePopup();
         if (successPopup) {
           successPopup.style.display = 'flex';
           successPopup.setAttribute('aria-hidden', 'false');
-          // move focus to OK button for accessibility
-          try { successOkBtn.focus(); } catch (err) { /* ignore */ }
+          try { successOkBtn.focus(); } catch (err) {}
         } else {
-          // fallback: show inline success if popup missing
           successBox.style.display = 'block';
           setTimeout(() => closePopup(), 1800);
         }
       } else {
-        // server responded but indicated an error
-        console.error('Apps Script response:', data);
-        alert('Submission failed on server. Please try again or contact admin.');
+        console.error('Server response object:', data);
+        alert('Submission failed on server: ' + (data && data.message ? data.message : 'See console.'));
       }
     })
     .catch(err => {
-      console.error('Network or CORS error:', err);
-      alert('Network error while submitting the form. Please check your connection.');
+      console.error('Submit error:', err);
+      alert('Network or server error while submitting the form. Open console (F12) for details.');
     });
   });
 
-  // success popup OK button handler — simply hides the success modal and returns focus
+  // success popup OK button
   if (successOkBtn && successPopup) {
     successOkBtn.addEventListener('click', () => {
       successPopup.style.display = 'none';
       successPopup.setAttribute('aria-hidden', 'true');
-      // return focus to last focused element (if any) — or to body
-      if (lastFocused && typeof lastFocused.focus === 'function') {
-        lastFocused.focus();
-      } else {
-        document.body.focus();
-      }
+      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+      else document.body.focus();
     });
   }
 
@@ -1925,6 +1908,8 @@ header.is-visible {
 
 })();
 </script>
+
+
 
 
 
@@ -1940,7 +1925,6 @@ header.is-visible {
 </div>
 
 <style>
-/* Success popup styles (neon / glass to match your theme) */
 .success-modal {
   display: none;
   position: fixed;
@@ -1984,6 +1968,7 @@ header.is-visible {
   .success-ok-btn { padding: 8px 18px; }
 }
 </style>
+
 
 
 
@@ -2377,5 +2362,6 @@ header.is-visible {
 
 </body>
 </html>
+
 
 
